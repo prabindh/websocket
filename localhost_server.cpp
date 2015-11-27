@@ -1,6 +1,7 @@
 // localhost_server.cpp : Defines the entry point for the console application.
 // Simple server for demo purpose. Handles only one point connection to the :80 http socket in Windows. Handles multiple clients on Linux.
 // Prabindh Sundareson, prabindh@yahoo.com
+// 2015
 
 #ifndef WIN32
 #include <sys/types.h>
@@ -21,6 +22,12 @@
 #include "b64.h"
 
 #include "localhost_server_websocket.h"
+
+//TODO to start
+//Change DATE to get from system date instead of hard-coding
+//Send back actual data for getdata.dat after command execution
+//Change IP address to match current client IP, read from header itself
+
 
 
 #define __DEBUG
@@ -307,7 +314,7 @@ int _tmain(int argc, _TCHAR* argv[])
 						char tempChar[100];
 						unsigned int loadData;
 
-#if 0
+#if 1
 						memset(sendBuff, 0, sizeof(sendBuff)); 
 						//Send system info binder to client
 						websocket_form_system_info(sendBuff, sizeof(sendBuff));
@@ -340,7 +347,7 @@ int _tmain(int argc, _TCHAR* argv[])
 
 					strcpy(sendBuff, "HTTP/1.1 101 Switching Protocols\r\n");
 					localhost_send(&newSocket, sendBuff, strlen(sendBuff));
-					strcpy(sendBuff, "Date:Tue, 26 Jun 2013 17:38:18 GMT\r\n");
+					strcpy(sendBuff, "Date:Fri, 27 Nov 2015 17:38:18 GMT\r\n");
 					localhost_send(&newSocket, sendBuff, strlen(sendBuff));
 					strcpy(sendBuff, "Server:Hooya Server\r\n");
 					localhost_send(&newSocket, sendBuff, strlen(sendBuff));
@@ -372,7 +379,7 @@ int _tmain(int argc, _TCHAR* argv[])
 
 					//Dummy post from server
 					//Check whether the client event is fired after this!! Then measure the latency! Latency is around 200 mSec
-					strcpy(sendBuff, "Access-Control-Allow-Origin:http://172.24.147.179\r\n");
+					strcpy(sendBuff, "Access-Control-Allow-Origin:http://192.168.0.5\r\n");
 					localhost_send(&newSocket, sendBuff, strlen(sendBuff));
 					strcpy(sendBuff, "\r\n");
 					localhost_send(&newSocket, sendBuff, strlen(sendBuff));
@@ -387,19 +394,19 @@ int _tmain(int argc, _TCHAR* argv[])
 					/* Send HTTP page */	
 					strcpy(sendBuff, "HTTP/1.1 200 OK\r\n");
 					localhost_send(&newSocket, sendBuff, strlen(sendBuff));
-					strcpy(sendBuff, "Date: Mon, 06 May 2013 17:38:18 GMT\r\n");
+					strcpy(sendBuff, "Date: Fri, 27 Nov 2015 17:38:18 GMT\r\n");
 					localhost_send(&newSocket, sendBuff, strlen(sendBuff));
 					strcpy(sendBuff, "Server: Hooya Server\r\n");
 					localhost_send(&newSocket, sendBuff, strlen(sendBuff));
 					strcpy(sendBuff, "Content-Type: text/html; charset=UTF-8\r\n");
 					localhost_send(&newSocket, sendBuff, strlen(sendBuff));
 					strcpy(sendBuff, "Content-Length: ");
-					sprintf(sendBuff+strlen(sendBuff), "%d",strlen(htmlpage3));
+					sprintf(sendBuff+strlen(sendBuff), "%d",strlen("hellotext"));
 					strcat(sendBuff, "\r\n");
 					localhost_send(&newSocket, sendBuff, strlen(sendBuff));
 					strcpy(sendBuff, "\r\n");
 					localhost_send(&newSocket, sendBuff, strlen(sendBuff));
-					strcpy(sendBuff, htmlpage3);
+					strcpy(sendBuff, "hellotext");
 					localhost_send(&newSocket, sendBuff, strlen(sendBuff));
 				}
 			}//if got data
